@@ -1,13 +1,13 @@
 import asyncio
 import random
-import numpy as np
 import time
 import socketio
+import numpy as np
 
 sio = socketio.AsyncClient(reconnection=True)
 
 
-class Battery:
+class Speed:
     global sio
 
     def __init__(self, url: str):
@@ -33,9 +33,9 @@ class Battery:
         counter = 0
         while True:
             try:
-                await self.update_battery(counter)
+                await self.update_speed(counter)
                 counter += 0.1
-                await asyncio.sleep(0.5)
+                await asyncio.sleep(0.1)
             except RuntimeError:
                 print('error')
                 continue
@@ -45,19 +45,18 @@ class Battery:
         print('disconnected')
 
     @staticmethod
-    async def update_battery(ins):
+    async def update_speed(ins):
         try:
-            await sio.emit('battery_data', {
+            await sio.emit('speed_data', {
                 'op': 1,
                 'd': {
-                    'temp': round(np.sin(ins) * 10 + 75 + random.uniform(-3.0, 3) * random.uniform(-1.0, 1.0), 1),
-                    'voltage': round(np.cos(ins + np.pi) + 12 + random.uniform(-1.0, 1) * random.uniform(-0.5, 1.0), 1),
+                    'speed': round(np.sin(ins) * 10 + 40 + random.uniform(-3.0, 3) * random.uniform(-1.0, 1.0), 1),
                     # current unix time stamp
                     'time': round(time.time() * 1000)
                 },
                 't': 'submit'
             })
-            # print('battery updated')
+            # print('speed updated')
         except KeyboardInterrupt:
             return False
         except Exception as excepts:
@@ -77,6 +76,6 @@ class Battery:
 
     @staticmethod
     @sio.event
-    def battery_data(data):
+    def speed_data(data):
         pass
         # print('server message: ' + str(data['t']))
