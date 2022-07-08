@@ -40,7 +40,9 @@ python src_client.py speed
 # or 
 python src_client.py battery
 ```
+
 ## License
+
 This project is licensed under the GNU General Public License v3.0.
 
 The full license text can be found [here](LICENSE.md).
