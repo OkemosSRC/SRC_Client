@@ -35,7 +35,7 @@ class Battery:
             try:
                 await self.update_battery(counter)
                 counter += 0.1
-                await asyncio.sleep(0.5)
+                await asyncio.sleep(5)
             except RuntimeError:
                 print('error')
                 continue
@@ -50,6 +50,7 @@ class Battery:
             await sio.emit('battery_data', {
                 'op': 1,
                 'd': {
+                    'auth': '',
                     'temp': round(np.sin(ins) * 10 + 75 + random.uniform(-3.0, 3) * random.uniform(-1.0, 1.0), 1),
                     'voltage': round(np.cos(ins + np.pi) + 12 + random.uniform(-1.0, 1) * random.uniform(-0.5, 1.0), 1),
                     # current unix time stamp

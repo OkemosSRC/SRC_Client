@@ -6,6 +6,7 @@ import asyncio
 import sys
 
 if __name__ == '__main__':
+    # change this to http://localhost:8080 if you are running the server locally
     bat = Battery('https://bot.rchat.fun')
     spd = Speed('https://bot.rchat.fun')
     if sys.argv[1] == 'battery':
