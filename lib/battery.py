@@ -1,9 +1,12 @@
 import asyncio
+import os
 import random
 import numpy as np
 import time
 import socketio
+import dotenv
 
+dotenv.load_dotenv()
 sio = socketio.AsyncClient(reconnection=True)
 
 
@@ -50,7 +53,7 @@ class Battery:
             await sio.emit('battery_data', {
                 'op': 1,
                 'd': {
-                    'auth': '',
+                    'auth': os.getenv('SERVER_TOKEN'),
                     'temp': round(np.sin(ins) * 10 + 75 + random.uniform(-3.0, 3) * random.uniform(-1.0, 1.0), 1),
                     'voltage': round(np.cos(ins + np.pi) + 12 + random.uniform(-1.0, 1) * random.uniform(-0.5, 1.0), 1),
                     # current unix time stamp

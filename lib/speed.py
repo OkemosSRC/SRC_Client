@@ -3,7 +3,10 @@ import random
 import time
 import socketio
 import numpy as np
+import dotenv
+import os
 
+dotenv.load_dotenv()
 sio = socketio.AsyncClient(reconnection=True)
 
 
@@ -50,7 +53,7 @@ class Speed:
             await sio.emit('speed_data', {
                 'op': 1,
                 'd': {
-                    'auth': '',
+                    'auth': os.getenv('SERVER_TOKEN'),
                     'speed': round(np.sin(ins) * 10 + 40 + random.uniform(-3.0, 3) * random.uniform(-1.0, 1.0), 1),
                     # current unix time stamp
                     'time': round(time.time() * 1000)
