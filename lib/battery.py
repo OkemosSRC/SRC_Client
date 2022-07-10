@@ -79,5 +79,5 @@ class Battery:
     @staticmethod
     @sio.event
     def battery_data(data):
-        pass
         # print('server message: ' + str(data['t']))
+        pass
